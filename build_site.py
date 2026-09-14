@@ -17,9 +17,7 @@ def nav(active):
       <div class="nav-pill wrap" style="max-width:1180px;">
         <a href="index.html" class="brand">
           {SEAL_SVG}
-          <span>GRIT
-            <span class="brand-sub">Resilient Infrastructure Task Force</span>
-          </span>
+          <span class="brand-sub">Resilient Infrastructure Task Force</span>
         </a>
         <button class="menu-toggle" aria-label="Toggle menu">
           <svg width="18" height="14" viewBox="0 0 18 14" fill="none"><path d="M0 1h18M0 7h18M0 13h18" stroke="white" stroke-width="2"/></svg>
@@ -91,11 +89,8 @@ def footer():
     </footer>
 """
 
-def page(title, description, active, body, extra_head=""):
-    return f"""<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
+def page(title, description, active, body, extra_head="", fragment=False):
+    head = f"""  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content="{description}" />
@@ -104,14 +99,26 @@ def page(title, description, active, body, extra_head=""):
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css" />
-  {extra_head}
-</head>
-<body>
-  <div class="draft-banner">DRAFT SITE — placeholder logo &amp; imagery, phase 2 sector pages coming soon. Not for public launch yet.</div>
+  {extra_head}"""
+
+    content = f"""  <div class="draft-banner">DRAFT SITE — placeholder logo &amp; imagery, phase 2 sector pages coming soon. Not for public launch yet.</div>
 {nav(active)}
 {body}
 {footer()}
-  <script src="assets/script.js"></script>
+  <script src="assets/script.js"></script>"""
+
+    if fragment:
+        # For the Artifact tool's entry file: no <!doctype>/<html>/<head>/<body> —
+        # the platform wraps those itself. Title/meta/links go at the top.
+        return head + "\n" + content + "\n"
+
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+{head}
+</head>
+<body>
+{content}
 </body>
 </html>
 """
@@ -512,6 +519,15 @@ def main():
             meta["teaser"],
             "sectors", sector_body(key),
         ))
+
+    # Artifact-publish entry point (fragment: no doctype/html/head/body —
+    # the Artifact tool wraps those itself). Keeps index.html above intact
+    # as a normal standalone file for the GitHub Pages zip.
+    write("artifact-entry.html", page(
+        "GRIT — Governor's Resilient Infrastructure Task Force",
+        "GRIT unites South Dakota's people, systems and partnerships to strengthen critical infrastructure and help communities prepare for disruption.",
+        "home", index_body(), fragment=True,
+    ))
 
 
 if __name__ == "__main__":
