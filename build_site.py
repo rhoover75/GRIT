@@ -3,8 +3,16 @@
 Run: python3 build_site.py
 """
 import os
+import time
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
+
+# Cache-busting token appended to assets/styles.css and assets/script.js so a
+# rebuild always forces browsers (and GitHub Pages' CDN) to fetch the new
+# files instead of serving a stale cached copy — the site's shared CSS/JS
+# have changed on nearly every round of feedback, and a stale cache is a
+# quiet, confusing way for old and new code to end up mixed together.
+BUILD_VERSION = str(int(time.time()))
 
 SEAL_SVG = '<img src="assets/img/grit-icon.png" alt="GRIT logo" class="brand-seal">'
 
@@ -101,14 +109,14 @@ def page(title, description, active, body, extra_head="", fragment=False):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/styles.css?v={BUILD_VERSION}" />
   {extra_head}"""
 
     content = f"""  <div class="draft-banner">DRAFT SITE — placeholder logo &amp; imagery, phase 2 sector pages coming soon. Not for public launch yet.</div>
 {nav(active)}
 {body}
 {footer()}
-  <script src="assets/script.js"></script>"""
+  <script src="assets/script.js?v={BUILD_VERSION}"></script>"""
 
     if fragment:
         # For the Artifact tool's entry file: no <!doctype>/<html>/<head>/<body> —

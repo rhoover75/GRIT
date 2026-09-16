@@ -1,2 +1,2 @@
-Wed Sep 16 04:22:31 UTC 2026
-Rebuilt: rail connector moved fully outside the card boundaries (gutter reserved on .lifeline-stack instead of padding inside each card)
+Wed Sep 16 04:38:06 UTC 2026
+Rebuilt: added cache-busting ?v= query string to styles.css and script.js links (rules out stale-cache mixing of old/new CSS+JS across rebuilds)
