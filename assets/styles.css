@@ -430,6 +430,54 @@ section { padding: 76px 0; }
   border-radius: 999px;
 }
 
+/* Lifeline stack: the 4-card grid + connector arrows + cybersecurity card */
+.lifeline-stack { position: relative; }
+
+.cyber-connectors {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.cyber-card {
+  margin-top: 74px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 26px 30px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+.cyber-card .icon {
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  background: var(--navy-800);
+  display: flex; align-items: center; justify-content: center;
+  flex: none;
+}
+.cyber-card .icon svg { width: 24px; height: 24px; stroke: var(--gold-500); }
+.cyber-card-body { flex: 1; min-width: 260px; }
+.cyber-card-body h3 { font-size: 1.05rem; margin-bottom: 6px; }
+.cyber-card-body p { font-size: 0.92rem; margin-bottom: 12px; }
+.cyber-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.cyber-tags .tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--navy-700);
+  background: var(--offwhite);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
 /* Partnerships */
 .partner-grid {
   display: grid;
@@ -547,18 +595,31 @@ section { padding: 76px 0; }
 /* ---------- Responsive ---------- */
 @media (max-width: 980px) {
   .card-grid { grid-template-columns: 1fr 1fr; }
-  .lifeline-grid { grid-template-columns: 1fr 1fr; }
   .partner-grid { grid-template-columns: 1fr 1fr; }
   .hero-inner { grid-template-columns: 1fr; }
   .hero-badge { justify-self: start; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Below the single-row breakpoint, the lifeline cards stack in one column
+     (see the 900px block too — this just moves that switch up to 980px so
+     there's no awkward in-between 2-up tier). Once stacked, a single vertical
+     arrow per card no longer points at the right thing (see script.js), so
+     instead we draw a "rail" connector: one vertical line running down the
+     right side of the stack with a short branch pointing into each card.
+     That rail has to live entirely *outside* the cards, never over them, so
+     .lifeline-stack (not the individual cards) reserves a quiet gutter on
+     its right edge — this narrows .lifeline-grid and .cyber-card, which
+     fill its content width, leaving blank space beside them for the rail. */
+  .lifeline-grid { grid-template-columns: 1fr; }
+  .lifeline-stack { padding-right: 48px; }
+  .cyber-card { margin-top: 34px; }
 }
 
 @media (max-width: 560px) {
   .brand-sub { display: none; }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 900px) {
   .nav-links {
     position: absolute;
     top: calc(100% + 10px);

@@ -141,6 +141,7 @@ ICONS = {
     "water": '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s7 7.2 7 12a7 7 0 0 1-14 0c0-4.8 7-12 7-12z"/></svg>',
     "transportation": '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l2-6a2 2 0 0 1 2-1.4h10A2 2 0 0 1 19 7l2 6M3 13v5a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h12v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-5M3 13h18M6.5 17.5h.01M17.5 17.5h.01"/></svg>',
     "communications": '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 20l1.3-3.6A7.96 7.96 0 0 1 4 12z"/></svg>',
+    "cyber": '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5.5v5.3c0 5 3.4 8.9 8 10.2 4.6-1.3 8-5.2 8-10.2V5.5L12 2z"/><path d="m9.5 12 1.8 1.8L15 10"/></svg>',
 }
 
 SECTOR_META = {
@@ -409,17 +410,34 @@ def lifelines_body():
       <div class="wrap">
         <span class="eyebrow">Critical Lifelines</span>
         <h1>Four systems. One resilient South Dakota.</h1>
-        <p>Our critical lifelines are the systems every South Dakotan depends on every day. GRIT works to understand how they connect, where the vulnerabilities are, and how to strengthen each one — with cybersecurity woven through all four.</p>
+        <p>Our critical lifelines are the systems every South Dakotan depends on every day. GRIT works to understand how they connect, where the vulnerabilities are, and how to strengthen each one — with cybersecurity underpinning all four.</p>
       </div>
     </section>
 
     <section>
       <div class="wrap">
-        <div class="lifeline-grid">{cards}
+        <div class="lifeline-stack">
+          <svg class="cyber-connectors" aria-hidden="true"></svg>
+
+          <div class="lifeline-grid">{cards}
+          </div>
+
+          <div class="cyber-card">
+            <div class="icon">{ICONS['cyber']}</div>
+            <div class="cyber-card-body">
+              <h3>Cybersecurity — underpinning every lifeline</h3>
+              <p>Cybersecurity isn't a fifth lifeline sitting apart from the other four — it's the layer that runs underneath and connects all of them. GRIT's work spans:</p>
+              <div class="cyber-tags">
+                <span class="tag">Operational Technology (OT) Cybersecurity</span>
+                <span class="tag">Industrial Control Systems (ICS) Cybersecurity</span>
+                <span class="tag">AI-Enabled Cybersecurity</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="note" style="margin-top:40px; max-width:760px;">
-          Cybersecurity isn't a fifth lifeline — it's woven through all four, from grid controls to water treatment systems to emergency communications. Detailed sector pages are in development for Phase 2.
+        <div class="note" style="margin-top:28px; max-width:760px;">
+          Detailed sector pages (including the cybersecurity threads specific to each) are in development for Phase 2.
         </div>
       </div>
     </section>
